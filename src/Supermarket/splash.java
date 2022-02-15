@@ -29,7 +29,7 @@ public class splash extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         Myprogress = new javax.swing.JProgressBar();
-        jLabel2 = new javax.swing.JLabel();
+        percentage = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -41,9 +41,9 @@ public class splash extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Batticaloa SuperMarket");
 
-        jLabel2.setFont(new java.awt.Font("Russo One", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("%");
+        percentage.setFont(new java.awt.Font("Russo One", 0, 24)); // NOI18N
+        percentage.setForeground(new java.awt.Color(255, 255, 255));
+        percentage.setText("%");
 
         jLabel3.setText("jLabel3");
 
@@ -60,7 +60,7 @@ public class splash extends javax.swing.JFrame {
                 .addGap(276, 276, 276)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel2))
+                    .addComponent(percentage))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -71,7 +71,7 @@ public class splash extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(91, 91, 91)
-                .addComponent(jLabel2)
+                .addComponent(percentage)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Myprogress, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -88,6 +88,7 @@ public class splash extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -117,19 +118,36 @@ public class splash extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the form 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new splash().setVisible(true);
             }
         });
+        */
+        splash mysplash= new splash();
+        mysplash.setVisible(true);
+        
+        try{
+           
+           for(int i=0;i<100;i++){
+               Thread.sleep(40);
+               mysplash.Myprogress.setValue(i);
+               mysplash.percentage.setText(Integer.toString(i)+"%");
+           }
+        }
+        catch(Exception e){
+            
+        }
+        new Login().setVisible(true);
+        mysplash.dispose();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar Myprogress;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel percentage;
     // End of variables declaration//GEN-END:variables
 }
