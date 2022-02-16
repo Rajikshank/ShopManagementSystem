@@ -5,13 +5,14 @@
 package Supermarket;
 
 
-import java.beans.Statement;
-import org.apache.derby.iapi.sql.ResultSet;
+ 
+ 
 import java.sql.*;  
 
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -28,8 +29,21 @@ public class Seller extends javax.swing.JFrame {
      */
     public Seller() {
         initComponents();
+        selectseller();
     }
     
+    public void selectseller(){
+        
+        try{
+         conn=  (Connection) DriverManager.getConnection("jdbc:derby://localhost:1527/SupermarketDB","user1","root");
+         stmt= conn.createStatement();
+         rs= stmt.executeQuery("select * from user1.SELLER");
+         sellerTable.setModel(DbUtils.resultSetToTableModel(rs));
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
