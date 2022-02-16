@@ -4,6 +4,16 @@
  */
 package Supermarket;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import net.proteanit.sql.DbUtils;
+
 /**
  *
  * @author kraji
@@ -15,8 +25,26 @@ public class Category extends javax.swing.JFrame {
      */
     public Category() {
         initComponents();
+        selectcategory();
     }
-
+    
+public  void selectcategory(){
+    
+      
+        try{
+         conn=  (Connection) DriverManager.getConnection("jdbc:derby://localhost:1527/SupermarketDB","user1","root");
+         stmt= conn.createStatement();
+         rs= stmt.executeQuery("select * from user1.CAT");
+         Cateogory_Table.setModel(DbUtils.resultSetToTableModel(rs));
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+}
+    
+    Connection conn;
+    Statement stmt;
+    ResultSet rs;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,19 +57,19 @@ public class Category extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        CatID = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        CatName = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        CatDec = new javax.swing.JTextField();
+        Clear_Button = new javax.swing.JButton();
+        Edit_button = new javax.swing.JButton();
+        Del_button = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        Cateogory_Table = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        Add_button = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,80 +81,95 @@ public class Category extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(102, 102, 255));
         jLabel1.setText("Manage Category");
 
-        jTextField3.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(102, 102, 255));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        CatID.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        CatID.setForeground(new java.awt.Color(102, 102, 255));
+        CatID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                CatIDActionPerformed(evt);
             }
         });
 
         jLabel3.setFont(new java.awt.Font("Russo One", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 102, 255));
-        jLabel3.setText("Product ID");
+        jLabel3.setText("Category ID");
 
         jLabel4.setFont(new java.awt.Font("Russo One", 0, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 255));
         jLabel4.setText("Name");
 
-        jTextField6.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(102, 102, 255));
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        CatName.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        CatName.setForeground(new java.awt.Color(102, 102, 255));
+        CatName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                CatNameActionPerformed(evt);
             }
         });
 
         jLabel8.setFont(new java.awt.Font("Russo One", 0, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(102, 102, 255));
-        jLabel8.setText("Price");
+        jLabel8.setText("Description");
 
-        jTextField7.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        jTextField7.setForeground(new java.awt.Color(102, 102, 255));
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        CatDec.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        CatDec.setForeground(new java.awt.Color(102, 102, 255));
+        CatDec.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                CatDecActionPerformed(evt);
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(102, 51, 255));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Clear");
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Clear_Button.setBackground(new java.awt.Color(102, 51, 255));
+        Clear_Button.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Clear_Button.setForeground(new java.awt.Color(255, 255, 255));
+        Clear_Button.setText("Clear");
+        Clear_Button.setBorder(null);
+        Clear_Button.setBorderPainted(false);
+        Clear_Button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Clear_ButtonMouseClicked(evt);
+            }
+        });
+        Clear_Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                Clear_ButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(102, 51, 255));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Edit");
-        jButton2.setToolTipText("");
-        jButton2.setBorder(null);
-        jButton2.setBorderPainted(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Edit_button.setBackground(new java.awt.Color(102, 51, 255));
+        Edit_button.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Edit_button.setForeground(new java.awt.Color(255, 255, 255));
+        Edit_button.setText("Edit");
+        Edit_button.setToolTipText("");
+        Edit_button.setBorder(null);
+        Edit_button.setBorderPainted(false);
+        Edit_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Edit_buttonMouseClicked(evt);
+            }
+        });
+        Edit_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                Edit_buttonActionPerformed(evt);
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(102, 51, 255));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Delete");
-        jButton3.setBorder(null);
-        jButton3.setBorderPainted(false);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        Del_button.setBackground(new java.awt.Color(102, 51, 255));
+        Del_button.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Del_button.setForeground(new java.awt.Color(255, 255, 255));
+        Del_button.setText("Delete");
+        Del_button.setBorder(null);
+        Del_button.setBorderPainted(false);
+        Del_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Del_buttonMouseClicked(evt);
+            }
+        });
+        Del_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                Del_buttonActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Cateogory_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -137,24 +180,34 @@ public class Category extends javax.swing.JFrame {
                 "ID", "Name", "Description"
             }
         ));
-        jTable1.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        jTable1.setRowHeight(25);
-        jTable1.setSelectionBackground(new java.awt.Color(102, 102, 255));
-        jScrollPane1.setViewportView(jTable1);
+        Cateogory_Table.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        Cateogory_Table.setRowHeight(25);
+        Cateogory_Table.setSelectionBackground(new java.awt.Color(102, 102, 255));
+        Cateogory_Table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Cateogory_TableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(Cateogory_Table);
 
         jLabel2.setFont(new java.awt.Font("Russo One", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 255));
         jLabel2.setText("Categories List");
 
-        jButton4.setBackground(new java.awt.Color(102, 51, 255));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Add");
-        jButton4.setBorder(null);
-        jButton4.setBorderPainted(false);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        Add_button.setBackground(new java.awt.Color(102, 51, 255));
+        Add_button.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Add_button.setForeground(new java.awt.Color(255, 255, 255));
+        Add_button.setText("Add");
+        Add_button.setBorder(null);
+        Add_button.setBorderPainted(false);
+        Add_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Add_buttonMouseClicked(evt);
+            }
+        });
+        Add_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                Add_buttonActionPerformed(evt);
             }
         });
 
@@ -175,29 +228,29 @@ public class Category extends javax.swing.JFrame {
                         .addGap(286, 286, 286)
                         .addComponent(jLabel8)
                         .addGap(8, 8, 8)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(CatDec, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel3)
                             .addGap(18, 18, 18)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CatID, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(253, 253, 253)
                             .addComponent(jLabel4)
                             .addGap(18, 18, 18)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(CatName, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addGap(158, 158, 158))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                             .addGap(241, 241, 241)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Add_button, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(26, 26, 26)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Edit_button, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(30, 30, 30)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Del_button, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(29, 29, 29)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 289, Short.MAX_VALUE))
+                            .addComponent(Clear_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 286, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,21 +259,21 @@ public class Category extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(CatID, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(CatName, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4)))
                 .addGap(17, 17, 17)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CatDec, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Clear_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Del_button, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Edit_button, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Add_button, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -269,33 +322,120 @@ public class Category extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void CatIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CatIDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_CatIDActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void CatNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CatNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_CatNameActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void CatDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CatDecActionPerformed
             // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_CatDecActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void Clear_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Clear_ButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_Clear_ButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void Edit_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Edit_buttonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_Edit_buttonActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void Del_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Del_buttonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_Del_buttonActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void Add_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_buttonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_Add_buttonActionPerformed
+
+    private void Add_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Add_buttonMouseClicked
+        // TODO add your handling code here:
+        
+    if(CatID.getText().isEmpty() || CatName.getText().isEmpty() || CatDec.getText().isEmpty()  )  {
+        JOptionPane.showMessageDialog(this,"Please fill the Fields");
+    }  
+    else{
+        try{
+    
+        conn=  (Connection) DriverManager.getConnection("jdbc:derby://localhost:1527/SupermarketDB","user1","root");
+        
+       PreparedStatement add= conn.prepareStatement("insert into CAT values(?,?,?)");
+       add.setInt(1,Integer.valueOf(CatID.getText()));
+        add.setString(2,CatName.getText());
+        add.setString(3,CatDec.getText());
+      
+         int row=add.executeUpdate();
+         JOptionPane.showMessageDialog(this, "Cateogory added succesfully");
+         conn.close();
+        selectcategory();
+    }
+    catch(Exception e){
+e.printStackTrace();
+    }// 
+    } 
+    }//GEN-LAST:event_Add_buttonMouseClicked
+
+    private void Clear_ButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Clear_ButtonMouseClicked
+        // TODO add your handling code here:
+        CatID.setText("");
+        CatName.setText("");
+        CatDec.setText("");
+        
+    }//GEN-LAST:event_Clear_ButtonMouseClicked
+
+    private void Del_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Del_buttonMouseClicked
+        // TODO add your handling code here:
+          if(CatID.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please enter Category Id to Delete");
+        }
+        else{
+            try{
+                conn=  (Connection) DriverManager.getConnection("jdbc:derby://localhost:1527/SupermarketDB","user1","root");
+                String Catid=CatID.getText().toString();
+                String query="Delete from user1.CAT where CATID ="+Catid;
+                Statement add=conn.createStatement();
+                add.executeUpdate(query);
+                  selectcategory();
+                 JOptionPane.showMessageDialog(this, "Category Deleted Succesfully");
+            }
+            catch(Exception e){
+        }
+        }
+    }//GEN-LAST:event_Del_buttonMouseClicked
+
+    private void Edit_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Edit_buttonMouseClicked
+        // TODO add your handling code here:
+           
+    if(CatID.getText().isEmpty() || CatName.getText().isEmpty() || CatDec.getText().isEmpty())  {
+        JOptionPane.showMessageDialog(this,"Missing Field values!!");
+    } 
+    else {
+    try{
+        conn=  (Connection) DriverManager.getConnection("jdbc:derby://localhost:1527/SupermarketDB","user1","root");
+        String query ="Update user1.CAT set CATNAME='"+CatName.getText().toString()+"'"+",CATDEC='"+CatDec.getText().toString()+"'"+" Where CATID="+CatID.getText();
+        Statement add=conn.createStatement();
+        add.executeUpdate(query);
+           JOptionPane.showMessageDialog(this,"Entry Updated succesfully");
+             selectcategory();
+           
+        
+    }catch(SQLException e){
+        e.printStackTrace();
+    }
+    }
+    }//GEN-LAST:event_Edit_buttonMouseClicked
+
+    private void Cateogory_TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Cateogory_TableMouseClicked
+        // TODO add your handling code here:
+         DefaultTableModel model=(DefaultTableModel) Cateogory_Table.getModel();
+        int myindex=Cateogory_Table.getSelectedRow();
+        CatID.setText(model.getValueAt(myindex, 0).toString());
+         CatName.setText(model.getValueAt(myindex, 1).toString());
+         CatDec.setText(model.getValueAt(myindex, 2).toString());
+           selectcategory();
+    }//GEN-LAST:event_Cateogory_TableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -334,10 +474,14 @@ public class Category extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton Add_button;
+    private javax.swing.JTextField CatDec;
+    private javax.swing.JTextField CatID;
+    private javax.swing.JTextField CatName;
+    private javax.swing.JTable Cateogory_Table;
+    private javax.swing.JButton Clear_Button;
+    private javax.swing.JButton Del_button;
+    private javax.swing.JButton Edit_button;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -347,9 +491,5 @@ public class Category extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
 }
