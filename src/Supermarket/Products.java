@@ -8,8 +8,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -210,6 +212,11 @@ public class Products extends javax.swing.JFrame {
         Prod_table.setIntercellSpacing(new java.awt.Dimension(0, 0));
         Prod_table.setRowHeight(25);
         Prod_table.setSelectionBackground(new java.awt.Color(102, 102, 255));
+        Prod_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Prod_tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(Prod_table);
 
         jLabel2.setFont(new java.awt.Font("Russo One", 0, 18)); // NOI18N
@@ -222,6 +229,11 @@ public class Products extends javax.swing.JFrame {
         Edit_button.setText("Edit");
         Edit_button.setBorder(null);
         Edit_button.setBorderPainted(false);
+        Edit_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Edit_buttonMouseClicked(evt);
+            }
+        });
         Edit_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Edit_buttonActionPerformed(evt);
@@ -326,6 +338,11 @@ public class Products extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Russo One", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("X");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -457,6 +474,44 @@ e.printStackTrace();
         }
         }
     }//GEN-LAST:event_Del_buttonMouseClicked
+
+    private void Edit_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Edit_buttonMouseClicked
+        // TODO add your handling code here:
+        if(ProductID.getText().isEmpty() || PrdName.getText().isEmpty() || ProdQty.getText().isEmpty() || PrdPrice.getText().isEmpty())  {
+        JOptionPane.showMessageDialog(this,"Missing Field values!!");
+    } 
+    else {
+    try{
+        conn=  (Connection) DriverManager.getConnection("jdbc:derby://localhost:1527/SupermarketDB","user1","root");
+        String query ="Update user1.PROD set PRODNAME='"+PrdName.getText()+"'"+",PRDQTY="+Integer.valueOf(ProdQty.getText())+",PRDCAT='"+Prdcat.getSelectedItem().toString()+"'"+",PRDPRICE="+Integer.valueOf(PrdPrice.getText())+" Where PRODID="+ProductID.getText();
+        Statement add=conn.createStatement();
+        add.executeUpdate(query);
+           JOptionPane.showMessageDialog(this,"Entry Updated");
+       selectproduct();
+           
+        
+    }catch(SQLException e){
+        e.printStackTrace();
+    }
+    }
+    }//GEN-LAST:event_Edit_buttonMouseClicked
+
+    private void Prod_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Prod_tableMouseClicked
+        // TODO add your handling code here:
+         DefaultTableModel model=(DefaultTableModel) Prod_table.getModel();
+        int myindex=Prod_table.getSelectedRow();
+        ProductID.setText(model.getValueAt(myindex, 0).toString());
+         PrdName.setText(model.getValueAt(myindex, 1).toString());
+         ProdQty.setText(model.getValueAt(myindex, 2).toString());
+            PrdPrice.setText(model.getValueAt(myindex, 3).toString());
+            selectproduct();
+           
+    }//GEN-LAST:event_Prod_tableMouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jLabel6MouseClicked
 
     /**
      * @param args the command line arguments
