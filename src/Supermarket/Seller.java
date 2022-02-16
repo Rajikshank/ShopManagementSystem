@@ -12,6 +12,7 @@ import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -137,6 +138,11 @@ public class Seller extends javax.swing.JFrame {
         Clear_button.setText("Clear");
         Clear_button.setBorder(null);
         Clear_button.setBorderPainted(false);
+        Clear_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Clear_buttonMouseClicked(evt);
+            }
+        });
         Clear_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Clear_buttonActionPerformed(evt);
@@ -166,6 +172,11 @@ public class Seller extends javax.swing.JFrame {
         Delete_Button.setText("Delete");
         Delete_Button.setBorder(null);
         Delete_Button.setBorderPainted(false);
+        Delete_Button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Delete_ButtonMouseClicked(evt);
+            }
+        });
         Delete_Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Delete_ButtonActionPerformed(evt);
@@ -186,6 +197,11 @@ public class Seller extends javax.swing.JFrame {
         sellerTable.setIntercellSpacing(new java.awt.Dimension(0, 0));
         sellerTable.setRowHeight(25);
         sellerTable.setSelectionBackground(new java.awt.Color(102, 102, 255));
+        sellerTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sellerTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(sellerTable);
 
         jLabel2.setFont(new java.awt.Font("Russo One", 0, 18)); // NOI18N
@@ -198,6 +214,11 @@ public class Seller extends javax.swing.JFrame {
         Edit_Button.setText("Edit");
         Edit_Button.setBorder(null);
         Edit_Button.setBorderPainted(false);
+        Edit_Button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Edit_ButtonMouseClicked(evt);
+            }
+        });
         Edit_Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Edit_ButtonActionPerformed(evt);
@@ -378,12 +399,75 @@ public class Seller extends javax.swing.JFrame {
          add.setString(4,Gender.getSelectedItem().toString());
          int row=add.executeUpdate();
          JOptionPane.showMessageDialog(this, "seller added");
+         conn.close();
+          selectseller();
     }
     catch(Exception e){
 e.printStackTrace();
     }// 
     } 
     }//GEN-LAST:event_Add_buttonMouseClicked
+
+    private void sellerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sellerTableMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel model=(DefaultTableModel) sellerTable.getModel();
+        int myindex=sellerTable.getSelectedRow();
+        SellerId.setText(model.getValueAt(myindex, 0).toString());
+         Name.setText(model.getValueAt(myindex, 1).toString());
+         Password.setText(model.getValueAt(myindex, 2).toString());
+          selectseller();
+         
+    }//GEN-LAST:event_sellerTableMouseClicked
+
+    private void Clear_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Clear_buttonMouseClicked
+        // TODO add your handling code here:
+        SellerId.setText("");
+        Name.setText("");
+        Password.setText("");
+        Gender.setSelectedIndex(0);
+    }//GEN-LAST:event_Clear_buttonMouseClicked
+
+    private void Delete_ButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Delete_ButtonMouseClicked
+        // TODO add your handling code here:
+        if(SellerId.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please enter seller Id to Delete");
+        }
+        else{
+            try{
+                conn=  (Connection) DriverManager.getConnection("jdbc:derby://localhost:1527/SupermarketDB","user1","root");
+                String sellerid=SellerId.getText().toString();
+                String query="Delete from user1.SELLER where SELLERID ="+sellerid;
+                Statement add=conn.createStatement();
+                add.executeUpdate(query);
+                 selectseller();
+                 JOptionPane.showMessageDialog(this, "Seller Deleted Succesfully");
+            }
+            catch(Exception e){
+        }
+        }
+    }//GEN-LAST:event_Delete_ButtonMouseClicked
+
+    private void Edit_ButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Edit_ButtonMouseClicked
+        // TODO add your handling code here:
+        
+    if(SellerId.getText().isEmpty() || Name.getText().isEmpty() || Password.getText().isEmpty()  )  {
+        JOptionPane.showMessageDialog(this,"Missing Field values!!");
+    } 
+    else {
+    try{
+        conn=  (Connection) DriverManager.getConnection("jdbc:derby://localhost:1527/SupermarketDB","user1","root");
+        String query ="Update user1.SELLER set SELLERNAME='"+Name.getText()+"'"+",SELLPASS='"+Password.getText()+"'"+",SELLGEN='"+Gender.getSelectedItem().toString()+"'"+" Where SELLERID="+SellerId.getText();
+        Statement add=conn.createStatement();
+        add.executeUpdate(query);
+           JOptionPane.showMessageDialog(this,"Entry Updated");
+            selectseller();
+           
+        
+    }catch(SQLException e){
+        e.printStackTrace();
+    }
+    }
+    }//GEN-LAST:event_Edit_ButtonMouseClicked
 
     /**
      * @param args the command line arguments
