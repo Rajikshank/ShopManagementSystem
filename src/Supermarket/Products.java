@@ -26,6 +26,7 @@ public class Products extends javax.swing.JFrame {
     public Products() {
         initComponents();
          selectproduct();
+         Getcat();
     }
 
     
@@ -46,6 +47,24 @@ public class Products extends javax.swing.JFrame {
         catch(Exception e){
             e.printStackTrace();
         }
+    }
+    
+    
+    public void Getcat(){
+         try{
+         conn=  (Connection) DriverManager.getConnection("jdbc:derby://localhost:1527/SupermarketDB","user1","root");
+         stmt= conn.createStatement();
+         rs= stmt.executeQuery("select * from user1.CAT");
+         while(rs.next()){
+         String mycat=rs.getString("CATNAME");
+         Prdcat.addItem(mycat);
+         }
+        
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -85,6 +104,8 @@ public class Products extends javax.swing.JFrame {
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 255));
+
+        jPanel2.setPreferredSize(new java.awt.Dimension(909, 600));
 
         jLabel1.setFont(new java.awt.Font("Russo One", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 255));
@@ -131,7 +152,6 @@ public class Products extends javax.swing.JFrame {
         jLabel7.setText("Category");
 
         Prdcat.setForeground(new java.awt.Color(102, 102, 255));
-        Prdcat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Drinks", "Vegetables", "Meat", " " }));
         Prdcat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PrdcatActionPerformed(evt);
@@ -335,7 +355,7 @@ public class Products extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(239, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel6.setFont(new java.awt.Font("Russo One", 0, 18)); // NOI18N
@@ -404,16 +424,16 @@ public class Products extends javax.swing.JFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(79, 79, 79)
                         .addComponent(jLabel10)
                         .addGap(29, 29, 29)
                         .addComponent(jLabel11)
                         .addGap(249, 249, 249)
-                        .addComponent(jLabel9)))
-                .addContainerGap())
+                        .addComponent(jLabel9))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -424,7 +444,9 @@ public class Products extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -533,7 +555,7 @@ e.printStackTrace();
     else {
     try{
         conn=  (Connection) DriverManager.getConnection("jdbc:derby://localhost:1527/SupermarketDB","user1","root");
-        String query ="Update user1.PROD set PRODNAME='"+PrdName.getText()+"'"+",PRDQTY="+Integer.valueOf(ProdQty.getText())+",PRDCAT='"+Prdcat.getSelectedItem().toString()+"'"+",PRDPRICE="+Integer.valueOf(PrdPrice.getText())+" Where PRODID="+ProductID.getText();
+        String query ="Update user1.PROD set PRODNAME='"+PrdName.getText()+"'"+",PRDQTY="+Integer.valueOf(ProdQty.getText())+",PRDCAT='"+Prdcat.getSelectedItem().toString()+"'"+",PRDPRICE="+PrdPrice.getText()+" Where PRODID="+ProductID.getText();
         Statement add=conn.createStatement();
         add.executeUpdate(query);
            JOptionPane.showMessageDialog(this,"Entry Updated");
