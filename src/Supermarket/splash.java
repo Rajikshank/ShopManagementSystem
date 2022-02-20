@@ -30,7 +30,7 @@ public class splash extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         Myprogress = new javax.swing.JProgressBar();
         percentage = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        introLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -45,7 +45,7 @@ public class splash extends javax.swing.JFrame {
         percentage.setForeground(new java.awt.Color(255, 255, 255));
         percentage.setText("%");
 
-        jLabel3.setText("jLabel3");
+        introLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -57,10 +57,13 @@ public class splash extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(146, 146, 146))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(276, 276, 276)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(percentage))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(272, 272, 272)
+                        .addComponent(percentage))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(183, 183, 183)
+                        .addComponent(introLabel)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -68,11 +71,11 @@ public class splash extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(91, 91, 91)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                .addComponent(introLabel)
+                .addGap(107, 107, 107)
                 .addComponent(percentage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(Myprogress, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -127,6 +130,9 @@ public class splash extends javax.swing.JFrame {
         */
         splash mysplash= new splash();
         mysplash.setVisible(true);
+        String intro="Simple Supermarket Management System";
+        int lengh=intro.length();
+        
         
         try{
            
@@ -134,6 +140,12 @@ public class splash extends javax.swing.JFrame {
                Thread.sleep(40);
                mysplash.Myprogress.setValue(i);
                mysplash.percentage.setText(Integer.toString(i)+"%");
+               if(i<lengh){
+               mysplash.introLabel.setText(mysplash.introLabel.getText()+ intro.charAt(i));
+               }
+            
+            
+               
            }
         }
         catch(Exception e){
@@ -145,8 +157,8 @@ public class splash extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar Myprogress;
+    private javax.swing.JLabel introLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel percentage;
     // End of variables declaration//GEN-END:variables
